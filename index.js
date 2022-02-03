@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
+const https = require('https')
+const fs = require('fs')
 
 //Conexão combanco de dados
 const connection = require('./mysqlFile')
@@ -101,6 +103,12 @@ app.post('/promos', (req, res) => {
   }
 })
 
-app.listen(3000, () => {
-  console.log("Backend executando...")
-})
+// app.listen(3000, () => {
+//   console.log("Backend executando...")
+// })
+
+https.createServer({
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+  passphrase: 'pedro1216'
+}, app).listen(443)
